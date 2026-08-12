@@ -1,14 +1,23 @@
-import java.sql.Date;
+import java.util.Date;
 
 public class Paciente {
-    int idPaciente;
-    String nome;
-    Date dataNascimento;
-    String telefone;
-    String email;
 
-    public void atualizarContato(String novoTelefone, String novoEmail) {
-        this.telefone = novoTelefone;
-        this.email = novoEmail;
+    public Integer idPaciente;
+    public String nome;
+    public Date dataNascimento;
+    public String telefone;
+    public String email;
+
+    public void atualizarContato(String telefone, String email) {
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    public void listarAgendamentos() {
+        System.out.println("Listando agendamentos do paciente...");
+    }
+
+    public void cancelarAgendamento(Integer idAgendamento) {
+        System.out.println("Cancelando agendamento: " + idAgendamento);
     }
 }
