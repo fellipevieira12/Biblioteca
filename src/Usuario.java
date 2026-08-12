@@ -23,10 +23,9 @@ public class Usuario {
         System.out.println("E-mail atualizado para: " + email);
     }
 
-    @Override
-    public String toString() {
-        return "Usuario [idUsuario=" + idUsuario +
-                ", nome=" + nome +
-                ", email=" + email + "]";
+    public void exibirDados() {
+        System.out.println("ID Usuário: " + idUsuario);
+        System.out.println("Nome: " + nome);
+        System.out.println("E-mail: " + email);
     }
 }

@@ -23,11 +23,10 @@ public class Emprestimo {
         System.out.println("Devolução registrada.");
     }
 
-    @Override
-    public String toString() {
-        return "Emprestimo [idEmprestimo=" + idEmprestimo +
-                ", dataEmprestimo=" + dataEmprestimo +
-                ", dataDevolucao=" + dataDevolucao +
-                ", ativo=" + ativo + "]";
+    public void exibirDados() {
+        System.out.println("ID Empréstimo: " + idEmprestimo);
+        System.out.println("Data Empréstimo: " + dataEmprestimo);
+        System.out.println("Data Devolução: " + dataDevolucao);
+        System.out.println("Ativo: " + ativo);
     }
 }

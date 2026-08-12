@@ -28,9 +28,8 @@ public class Biblioteca {
         System.out.println("Devolução registrada.");
     }
 
-    @Override
-    public String toString() {
-        return "Biblioteca [idBiblioteca=" + idBiblioteca +
-                ", nome=" + nome + "]";
+    public void exibirDados() {
+        System.out.println("ID Biblioteca: " + idBiblioteca);
+        System.out.println("Nome: " + nome);
     }
 }
