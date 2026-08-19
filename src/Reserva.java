@@ -4,12 +4,11 @@ public class Reserva {
 
     int idReserva;
 
-    // Relacionamento: reserva liga um usuário a um livro emprestado.
     Livro livro;
     Usuario usuario;
 
     Date dataReserva;
-    String status; // "Ativa" ou "Cancelada"
+    String status;
 
     void cancelarReserva() {
         this.status = "Cancelada";

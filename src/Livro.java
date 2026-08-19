@@ -3,7 +3,7 @@ public class Livro {
     int idLivro;
     String titulo;
     String autor;
-    String status; // "Disponível" ou "Emprestado"
+    String status;
 
     void alterarStatus(String status) {
         this.status = status;

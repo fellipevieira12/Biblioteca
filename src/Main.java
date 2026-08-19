@@ -4,7 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Criando a bibliotecária
         Bibliotecaria bibliotecaria = new Bibliotecaria();
         bibliotecaria.idBibliotecaria = 1;
         bibliotecaria.nome = "Maria";
@@ -26,8 +25,6 @@ public class Main {
         bibliotecaria.cadastrarLivro(livro);
         bibliotecaria.cadastrarUsuario(usuario);
 
-        // Criando o empréstimo -> aqui é onde o relacionamento aparece:
-        // o Emprestimo é ligado a UM livro e UM usuário específicos.
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.idEmprestimo = 1;
         emprestimo.livro = livro;
@@ -50,7 +47,6 @@ public class Main {
         livro.exibirInformacoes();
         emprestimo.exibirDados();
 
-        // Desafio extra: reserva de um livro
         Reserva reserva = new Reserva();
         reserva.idReserva = 1;
         reserva.livro = livro;

@@ -4,13 +4,12 @@ public class Emprestimo {
 
     int idEmprestimo;
 
-    // Relacionamento: "Um empréstimo está ligado a apenas um livro e um usuário."
     Livro livro;
     Usuario usuario;
 
     Date dataEmprestimo;
     Date dataDevolucao;
-    String status; // "Ativo" ou "Devolvido"
+    String status;
 
     void registrarDevolucao() {
         this.status = "Devolvido";

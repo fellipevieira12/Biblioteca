@@ -3,7 +3,6 @@ public class Bibliotecaria {
     int idBibliotecaria;
     String nome;
 
-    // Relacionamento: "A bibliotecária gerencia vários livros" / registra empréstimos.
     Livro[] acervo = new Livro[50];
     int totalLivros = 0;
 

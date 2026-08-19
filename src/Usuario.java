@@ -4,7 +4,6 @@ public class Usuario {
     String nome;
     String email;
 
-    // Relacionamento: "Um usuário pode ter vários empréstimos."
     Emprestimo[] emprestimos = new Emprestimo[50];
     int totalEmprestimos = 0;
 
