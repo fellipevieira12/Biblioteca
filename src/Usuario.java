@@ -1,29 +1,31 @@
 public class Usuario {
 
-    private int idUsuario;
-    private String nome;
-    private String email;
+    int idUsuario;
+    String nome;
+    String email;
 
-    public Usuario(int idUsuario, String nome, String email) {
-        this.idUsuario = idUsuario;
-        this.nome = nome;
-        this.email = email;
+    // Relacionamento: "Um usuário pode ter vários empréstimos."
+    Emprestimo[] emprestimos = new Emprestimo[50];
+    int totalEmprestimos = 0;
+
+    void adicionarEmprestimo(Emprestimo emprestimo) {
+        emprestimos[totalEmprestimos] = emprestimo;
+        totalEmprestimos++;
     }
 
-    public void solicitarEmprestimo() {
-        System.out.println("Empréstimo solicitado.");
+    void listarEmprestimos() {
+        System.out.println("Empréstimos de " + nome + ":");
+        for (int i = 0; i < totalEmprestimos; i++) {
+            emprestimos[i].exibirDados();
+        }
     }
 
-    public void consultarEmprestimos() {
-        System.out.println("Consultando empréstimos...");
+    void atualizarContato(String novoEmail) {
+        this.email = novoEmail;
+        System.out.println("E-mail atualizado para: " + novoEmail);
     }
 
-    public void atualizarContato(String email) {
-        this.email = email;
-        System.out.println("E-mail atualizado para: " + email);
-    }
-
-    public void exibirDados() {
+    void exibirDados() {
         System.out.println("ID Usuário: " + idUsuario);
         System.out.println("Nome: " + nome);
         System.out.println("E-mail: " + email);

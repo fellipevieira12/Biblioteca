@@ -2,31 +2,33 @@ import java.util.Date;
 
 public class Emprestimo {
 
-    private int idEmprestimo;
-    private Date dataEmprestimo;
-    private Date dataDevolucao;
-    private Boolean ativo;
+    int idEmprestimo;
 
-    public Emprestimo(int idEmprestimo, Date dataEmprestimo,
-            Date dataDevolucao, Boolean ativo) {
+    // Relacionamento: "Um empréstimo está ligado a apenas um livro e um usuário."
+    Livro livro;
+    Usuario usuario;
 
-        this.idEmprestimo = idEmprestimo;
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
-        this.ativo = ativo;
-    }
+    Date dataEmprestimo;
+    Date dataDevolucao;
+    String status; // "Ativo" ou "Devolvido"
 
-    public void registrarDevolucao() {
-        this.ativo = false;
+    void registrarDevolucao() {
+        this.status = "Devolvido";
         this.dataDevolucao = new Date();
+
+        if (livro != null) {
+            livro.alterarStatus("Disponível");
+        }
 
         System.out.println("Devolução registrada.");
     }
 
-    public void exibirDados() {
+    void exibirDados() {
         System.out.println("ID Empréstimo: " + idEmprestimo);
+        System.out.println("Livro: " + (livro != null ? livro.titulo : "-"));
+        System.out.println("Usuário: " + (usuario != null ? usuario.nome : "-"));
         System.out.println("Data Empréstimo: " + dataEmprestimo);
         System.out.println("Data Devolução: " + dataDevolucao);
-        System.out.println("Ativo: " + ativo);
+        System.out.println("Status: " + status);
     }
 }

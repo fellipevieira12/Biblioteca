@@ -2,62 +2,64 @@ import java.util.Date;
 
 public class Main {
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
 
-                Usuario usuario = new Usuario(
-                                1,
-                                "Gabriel",
-                                "gabriel@email.com");
+        // Criando a bibliotecária
+        Bibliotecaria bibliotecaria = new Bibliotecaria();
+        bibliotecaria.idBibliotecaria = 1;
+        bibliotecaria.nome = "Maria";
 
-                Biblioteca biblioteca = new Biblioteca(
-                                1,
-                                "Biblioteca Central");
+        // Criando um livro
+        Livro livro = new Livro();
+        livro.idLivro = 1;
+        livro.titulo = "Clean Code";
+        livro.autor = "Robert C. Martin";
+        livro.status = "Disponível";
 
-                Livro livro = new Livro(
-                                1,
-                                "Clean Code",
-                                "Robert C. Martin",
-                                "Disponível");
+        // Criando um usuário
+        Usuario usuario = new Usuario();
+        usuario.idUsuario = 1;
+        usuario.nome = "Gabriel";
+        usuario.email = "gabriel@email.com";
 
-                Emprestimo emprestimo = new Emprestimo(
-                                1,
-                                new Date(),
-                                null,
-                                true);
+        System.out.println("=== CADASTROS ===");
+        bibliotecaria.cadastrarLivro(livro);
+        bibliotecaria.cadastrarUsuario(usuario);
 
-                Reserva reserva = new Reserva(
-                                1,
-                                new Date(),
-                                "Ativa");
+        // Criando o empréstimo -> aqui é onde o relacionamento aparece:
+        // o Emprestimo é ligado a UM livro e UM usuário específicos.
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.idEmprestimo = 1;
+        emprestimo.livro = livro;
+        emprestimo.usuario = usuario;
+        emprestimo.dataEmprestimo = new Date();
+        emprestimo.status = "Ativo";
 
-                System.out.println("=== USUÁRIO ===");
-                usuario.exibirDados();
+        System.out.println("\n=== REGISTRANDO EMPRÉSTIMO ===");
+        bibliotecaria.registrarEmprestimo(emprestimo);
 
-                System.out.println("\n=== BIBLIOTECA ===");
-                biblioteca.exibirDados();
+        System.out.println("\n=== ESTADO APÓS EMPRÉSTIMO ===");
+        livro.exibirInformacoes();
+        emprestimo.exibirDados();
+        usuario.listarEmprestimos();
 
-                System.out.println("\n=== LIVRO ===");
-                livro.exibirInformacoes();
+        System.out.println("\n=== REGISTRANDO DEVOLUÇÃO ===");
+        bibliotecaria.registrarDevolucao(emprestimo);
 
-                System.out.println("\n=== EMPRÉSTIMO ===");
-                emprestimo.exibirDados();
+        System.out.println("\n=== ESTADO APÓS DEVOLUÇÃO ===");
+        livro.exibirInformacoes();
+        emprestimo.exibirDados();
 
-                System.out.println("\n=== RESERVA ===");
-                reserva.exibirDados();
+        // Desafio extra: reserva de um livro
+        Reserva reserva = new Reserva();
+        reserva.idReserva = 1;
+        reserva.livro = livro;
+        reserva.usuario = usuario;
+        reserva.dataReserva = new Date();
+        reserva.status = "Ativa";
 
-                System.out.println("\n=== TESTANDO MÉTODOS ===");
-
-                usuario.solicitarEmprestimo();
-                usuario.consultarEmprestimos();
-
-                biblioteca.cadastrarLivro();
-                biblioteca.cadastrarUsuario();
-                biblioteca.registrarEmprestimo();
-
-                livro.alterarStatus("Emprestado");
-
-                reserva.cancelarReserva();
-
-                emprestimo.registrarDevolucao();
-        }
+        System.out.println("\n=== REGISTRANDO RESERVA ===");
+        bibliotecaria.registrarReserva(reserva);
+        reserva.exibirDados();
+    }
 }
