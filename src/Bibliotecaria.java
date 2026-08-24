@@ -1,47 +1,70 @@
 public class Bibliotecaria {
 
-    int idBibliotecaria;
-    String nome;
+    private int idBibliotecaria;
+    private String nome;
 
-    Livro[] acervo = new Livro[50];
-    int totalLivros = 0;
+    private Livro[] acervo = new Livro[50];
+    private int totalLivros = 0;
 
-    Usuario[] usuarios = new Usuario[50];
-    int totalUsuarios = 0;
+    private Usuario[] usuarios = new Usuario[50];
+    private int totalUsuarios = 0;
 
-    Emprestimo[] emprestimos = new Emprestimo[50];
-    int totalEmprestimos = 0;
+    private Emprestimo[] emprestimos = new Emprestimo[50];
+    private int totalEmprestimos = 0;
 
-    void cadastrarLivro(Livro livro) {
+    public Bibliotecaria(int idBibliotecaria, String nome) {
+        this.idBibliotecaria = idBibliotecaria;
+        this.nome = nome;
+    }
+
+    public int getIdBibliotecaria() {
+        return idBibliotecaria;
+    }
+
+    public void setIdBibliotecaria(int idBibliotecaria) {
+        this.idBibliotecaria = idBibliotecaria;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void cadastrarLivro(Livro livro) {
         acervo[totalLivros] = livro;
         totalLivros++;
-        System.out.println("Livro cadastrado: " + livro.titulo);
+        System.out.println("Livro cadastrado: " + livro.getTitulo());
     }
 
-    void cadastrarUsuario(Usuario usuario) {
+    public void cadastrarUsuario(Usuario usuario) {
         usuarios[totalUsuarios] = usuario;
         totalUsuarios++;
-        System.out.println("Usuário cadastrado: " + usuario.nome);
+        System.out.println("Usuário cadastrado: " + usuario.getNome());
     }
 
-    void registrarEmprestimo(Emprestimo emprestimo) {
+    public void registrarEmprestimo(Emprestimo emprestimo) {
         emprestimos[totalEmprestimos] = emprestimo;
         totalEmprestimos++;
-        emprestimo.livro.alterarStatus("Emprestado");
-        emprestimo.usuario.adicionarEmprestimo(emprestimo);
+        emprestimo.getLivro().setStatus("Emprestado");
+        emprestimo.getUsuario().adicionarEmprestimo(emprestimo);
         System.out.println("Empréstimo registrado.");
     }
 
-    void registrarDevolucao(Emprestimo emprestimo) {
+    public void registrarDevolucao(Emprestimo emprestimo) {
         emprestimo.registrarDevolucao();
     }
 
-    void registrarReserva(Reserva reserva) {
-        System.out.println("Reserva registrada.");
-    }
-
-    void exibirDados() {
-        System.out.println("ID Bibliotecária: " + idBibliotecaria);
-        System.out.println("Nome: " + nome);
+    @Override
+    public String toString() {
+        return "Bibliotecaria{" +
+                "idBibliotecaria=" + idBibliotecaria +
+                ", nome='" + nome + '\'' +
+                ", totalLivros=" + totalLivros +
+                ", totalUsuarios=" + totalUsuarios +
+                ", totalEmprestimos=" + totalEmprestimos +
+                '}';
     }
 }
