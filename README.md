@@ -1,20 +1,26 @@
-## Getting Started
+# Sistema de Biblioteca
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Projeto acadêmico da disciplina de Programação Orientada a Objetos (UNIVAS),
+desenvolvido a partir da UML da pasta `UML/`.
 
-## Folder Structure
+## Estrutura
 
-The workspace contains two folders by default, where:
+```
+src/
+├── Livro.java
+├── Usuario.java
+├── Emprestimo.java
+├── Bibliotecaria.java
+├── Reserva.java
+├── StatusLivro.java
+└── StatusReserva.java
+```
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Como executar
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+1. Abra a pasta `src` no IntelliJ/Eclipse/NetBeans/VS Code.
+2. Compile e execute a classe `Main`.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
-teste
-
+`Main` instancia um objeto de cada classe (`Livro`, `Usuario`, `Emprestimo`,
+`Bibliotecaria`, `Reserva`) e imprime cada um com `System.out.println()`,
+demonstrando os métodos `toString()`.
