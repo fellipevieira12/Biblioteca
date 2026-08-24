@@ -29,5 +29,14 @@ public class Main {
         System.out.println("\n=== ESTADO APÓS DEVOLUÇÃO ===");
         System.out.println(livro);
         System.out.println(emprestimo);
+
+        System.out.println("\n=== DEMONSTRANDO RESERVA ===");
+        Reserva reserva = new Reserva(1, livro, usuario, new Date());
+        bibliotecaria.registrarReserva(reserva);
+        System.out.println(reserva);
+        System.out.println(livro);
+
+        reserva.cancelarReserva();
+        System.out.println(reserva);
     }
 }

@@ -2,24 +2,74 @@ import java.util.Date;
 
 public class Reserva {
 
-    int idReserva;
+    private int idReserva;
+    private Date dataReserva;
+    private StatusReserva statusReserva;
 
-    Livro livro;
-    Usuario usuario;
+    private Livro livro;
+    private Usuario usuario;
 
-    Date dataReserva;
-    String status;
+    public Reserva(int idReserva, Livro livro, Usuario usuario, Date dataReserva) {
+        this.idReserva = idReserva;
+        this.livro = livro;
+        this.usuario = usuario;
+        this.dataReserva = dataReserva;
+        this.statusReserva = StatusReserva.ATIVA;
+    }
 
-    void cancelarReserva() {
-        this.status = "Cancelada";
+    public int getIdReserva() {
+        return idReserva;
+    }
+
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
+    }
+
+    public Date getDataReserva() {
+        return dataReserva;
+    }
+
+    public void setDataReserva(Date dataReserva) {
+        this.dataReserva = dataReserva;
+    }
+
+    public StatusReserva getStatusReserva() {
+        return statusReserva;
+    }
+
+    public void setStatusReserva(StatusReserva statusReserva) {
+        this.statusReserva = statusReserva;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void cancelarReserva() {
+        this.statusReserva = StatusReserva.CANCELADA;
         System.out.println("Reserva cancelada.");
     }
 
-    void exibirDados() {
-        System.out.println("ID Reserva: " + idReserva);
-        System.out.println("Livro: " + (livro != null ? livro.titulo : "-"));
-        System.out.println("Usuário: " + (usuario != null ? usuario.nome : "-"));
-        System.out.println("Data Reserva: " + dataReserva);
-        System.out.println("Status: " + status);
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "idReserva=" + idReserva +
+                ", livro=" + (livro != null ? livro.getTitulo() : "-") +
+                ", usuario=" + (usuario != null ? usuario.getNome() : "-") +
+                ", dataReserva=" + dataReserva +
+                ", statusReserva=" + statusReserva +
+                '}';
     }
 }

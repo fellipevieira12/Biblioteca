@@ -37,16 +37,22 @@ public class Usuario {
         this.email = email;
     }
 
-    public void adicionarEmprestimo(Emprestimo emprestimo) {
+    public void solicitarEmprestimo(Emprestimo emprestimo) {
         emprestimos[totalEmprestimos] = emprestimo;
         totalEmprestimos++;
+        System.out.println("Empréstimo solicitado por " + nome);
     }
 
-    public void listarEmprestimos() {
+    public void consultarEmprestimos() {
         System.out.println("Empréstimos de " + nome + ":");
         for (int i = 0; i < totalEmprestimos; i++) {
             System.out.println(emprestimos[i]);
         }
+    }
+
+    public void atualizarContato(String email) {
+        this.email = email;
+        System.out.println("E-mail atualizado para: " + email);
     }
 
     @Override

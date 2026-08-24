@@ -12,6 +12,9 @@ public class Bibliotecaria {
     private Emprestimo[] emprestimos = new Emprestimo[50];
     private int totalEmprestimos = 0;
 
+    private Reserva[] reservas = new Reserva[50];
+    private int totalReservas = 0;
+
     public Bibliotecaria(int idBibliotecaria, String nome) {
         this.idBibliotecaria = idBibliotecaria;
         this.nome = nome;
@@ -48,9 +51,16 @@ public class Bibliotecaria {
     public void registrarEmprestimo(Emprestimo emprestimo) {
         emprestimos[totalEmprestimos] = emprestimo;
         totalEmprestimos++;
-        emprestimo.getLivro().setStatus("Emprestado");
-        emprestimo.getUsuario().adicionarEmprestimo(emprestimo);
+        emprestimo.getLivro().alterarStatus(StatusLivro.EMPRESTADO);
+        emprestimo.getUsuario().solicitarEmprestimo(emprestimo);
         System.out.println("Empréstimo registrado.");
+    }
+
+    public void registrarReserva(Reserva reserva) {
+        reservas[totalReservas] = reserva;
+        totalReservas++;
+        reserva.getLivro().alterarStatus(StatusLivro.RESERVADO);
+        System.out.println("Reserva registrada.");
     }
 
     public void registrarDevolucao(Emprestimo emprestimo) {
@@ -65,6 +75,7 @@ public class Bibliotecaria {
                 ", totalLivros=" + totalLivros +
                 ", totalUsuarios=" + totalUsuarios +
                 ", totalEmprestimos=" + totalEmprestimos +
+                ", totalReservas=" + totalReservas +
                 '}';
     }
 }
