@@ -1,32 +1,61 @@
 public class Usuario {
 
-    int idUsuario;
-    String nome;
-    String email;
+    private int idUsuario;
+    private String nome;
+    private String email;
 
-    Emprestimo[] emprestimos = new Emprestimo[50];
-    int totalEmprestimos = 0;
+    private Emprestimo[] emprestimos = new Emprestimo[50];
+    private int totalEmprestimos = 0;
 
-    void adicionarEmprestimo(Emprestimo emprestimo) {
+    public Usuario(int idUsuario, String nome, String email) {
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void adicionarEmprestimo(Emprestimo emprestimo) {
         emprestimos[totalEmprestimos] = emprestimo;
         totalEmprestimos++;
     }
 
-    void listarEmprestimos() {
+    public void listarEmprestimos() {
         System.out.println("Empréstimos de " + nome + ":");
         for (int i = 0; i < totalEmprestimos; i++) {
-            emprestimos[i].exibirDados();
+            System.out.println(emprestimos[i]);
         }
     }
 
-    void atualizarContato(String novoEmail) {
-        this.email = novoEmail;
-        System.out.println("E-mail atualizado para: " + novoEmail);
-    }
-
-    void exibirDados() {
-        System.out.println("ID Usuário: " + idUsuario);
-        System.out.println("Nome: " + nome);
-        System.out.println("E-mail: " + email);
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", totalEmprestimos=" + totalEmprestimos +
+                '}';
     }
 }
