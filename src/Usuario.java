@@ -4,8 +4,7 @@ public class Usuario {
     private String nome;
     private String email;
 
-    private Emprestimo[] emprestimos = new Emprestimo[50];
-    private int totalEmprestimos = 0;
+    private Emprestimo[] emprestimos = new Emprestimo[0];
 
     public Usuario(int idUsuario, String nome, String email) {
         this.idUsuario = idUsuario;
@@ -38,15 +37,20 @@ public class Usuario {
     }
 
     public void solicitarEmprestimo(Emprestimo emprestimo) {
-        emprestimos[totalEmprestimos] = emprestimo;
-        totalEmprestimos++;
+        Emprestimo[] novoArray = new Emprestimo[emprestimos.length + 1];
+        for (int i = 0; i < emprestimos.length; i++) {
+            novoArray[i] = emprestimos[i];
+        }
+        novoArray[emprestimos.length] = emprestimo;
+        emprestimos = novoArray;
+
         System.out.println("Empréstimo solicitado por " + nome);
     }
 
     public void consultarEmprestimos() {
         System.out.println("Empréstimos de " + nome + ":");
-        for (int i = 0; i < totalEmprestimos; i++) {
-            System.out.println(emprestimos[i]);
+        for (Emprestimo emprestimo : emprestimos) {
+            System.out.println(emprestimo);
         }
     }
 
@@ -61,7 +65,7 @@ public class Usuario {
                 "idUsuario=" + idUsuario +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
-                ", totalEmprestimos=" + totalEmprestimos +
+                ", totalEmprestimos=" + emprestimos.length +
                 '}';
     }
 }

@@ -3,18 +3,6 @@ public class Bibliotecaria {
     private int idBibliotecaria;
     private String nome;
 
-    private Livro[] acervo = new Livro[50];
-    private int totalLivros = 0;
-
-    private Usuario[] usuarios = new Usuario[50];
-    private int totalUsuarios = 0;
-
-    private Emprestimo[] emprestimos = new Emprestimo[50];
-    private int totalEmprestimos = 0;
-
-    private Reserva[] reservas = new Reserva[50];
-    private int totalReservas = 0;
-
     public Bibliotecaria(int idBibliotecaria, String nome) {
         this.idBibliotecaria = idBibliotecaria;
         this.nome = nome;
@@ -36,29 +24,25 @@ public class Bibliotecaria {
         this.nome = nome;
     }
 
-    public void cadastrarLivro(Livro livro) {
-        acervo[totalLivros] = livro;
-        totalLivros++;
+    public void cadastrarLivro(Biblioteca biblioteca, Livro livro) {
+        biblioteca.adicionarLivro(livro);
         System.out.println("Livro cadastrado: " + livro.getTitulo());
     }
 
-    public void cadastrarUsuario(Usuario usuario) {
-        usuarios[totalUsuarios] = usuario;
-        totalUsuarios++;
+    public void cadastrarUsuario(Biblioteca biblioteca, Usuario usuario) {
+        biblioteca.adicionarUsuario(usuario);
         System.out.println("Usuário cadastrado: " + usuario.getNome());
     }
 
-    public void registrarEmprestimo(Emprestimo emprestimo) {
-        emprestimos[totalEmprestimos] = emprestimo;
-        totalEmprestimos++;
+    public void registrarEmprestimo(Biblioteca biblioteca, Emprestimo emprestimo) {
+        biblioteca.adicionarEmprestimo(emprestimo);
         emprestimo.getLivro().alterarStatus(StatusLivro.EMPRESTADO);
         emprestimo.getUsuario().solicitarEmprestimo(emprestimo);
         System.out.println("Empréstimo registrado.");
     }
 
-    public void registrarReserva(Reserva reserva) {
-        reservas[totalReservas] = reserva;
-        totalReservas++;
+    public void registrarReserva(Biblioteca biblioteca, Reserva reserva) {
+        biblioteca.adicionarReserva(reserva);
         reserva.getLivro().alterarStatus(StatusLivro.RESERVADO);
         System.out.println("Reserva registrada.");
     }
@@ -72,10 +56,6 @@ public class Bibliotecaria {
         return "Bibliotecaria{" +
                 "idBibliotecaria=" + idBibliotecaria +
                 ", nome='" + nome + '\'' +
-                ", totalLivros=" + totalLivros +
-                ", totalUsuarios=" + totalUsuarios +
-                ", totalEmprestimos=" + totalEmprestimos +
-                ", totalReservas=" + totalReservas +
                 '}';
     }
 }
