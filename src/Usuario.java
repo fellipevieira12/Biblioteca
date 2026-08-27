@@ -68,4 +68,10 @@ public class Usuario {
                 ", totalEmprestimos=" + emprestimos.length +
                 '}';
     }
+
+    public String toCSV() {
+        return idUsuario + ";" +
+                nome + ";" +
+                email;
+    }
 }

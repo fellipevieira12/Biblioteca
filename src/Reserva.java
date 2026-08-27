@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Reserva {
 
@@ -71,5 +72,16 @@ public class Reserva {
                 ", dataReserva=" + dataReserva +
                 ", statusReserva=" + statusReserva +
                 '}';
+    }
+
+    public String toCSV() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        return idReserva + ";" +
+                livro.getIdLivro() + ";" +
+                usuario.getIdUsuario() + ";" +
+                sdf.format(dataReserva) + ";" +
+                statusReserva;
     }
 }

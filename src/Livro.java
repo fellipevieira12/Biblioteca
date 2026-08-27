@@ -64,4 +64,11 @@ public class Livro {
                 ", status=" + status +
                 '}';
     }
+
+    public String toCSV() {
+        return idLivro + ";" +
+                titulo + ";" +
+                autor + ";" +
+                status;
+    }
 }

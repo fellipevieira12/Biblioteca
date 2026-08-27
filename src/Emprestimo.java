@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Emprestimo {
@@ -87,5 +88,23 @@ public class Emprestimo {
                 ", dataDevolucao=" + dataDevolucao +
                 ", ativo=" + ativo +
                 '}';
+    }
+
+    public String toCSV() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        String devolucao = "";
+
+        if (dataDevolucao != null) {
+            devolucao = sdf.format(dataDevolucao);
+        }
+
+        return idEmprestimo + ";" +
+                livro.getIdLivro() + ";" +
+                usuario.getIdUsuario() + ";" +
+                sdf.format(dataEmprestimo) + ";" +
+                devolucao + ";" +
+                ativo;
     }
 }

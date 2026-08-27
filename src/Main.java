@@ -8,8 +8,15 @@ public class Main {
         Bibliotecaria maria = new Bibliotecaria(1, "Maria");
         Bibliotecaria joao = new Bibliotecaria(2, "João");
 
-        Livro livro = new Livro(1, "Clean Code", "Robert C. Martin");
-        Usuario usuario = new Usuario(1, "Gabriel", "gabriel@email.com");
+        Livro livro = new Livro(
+                ManipuladorArquivos.proximoId("Livro.csv"),
+                "Clean Code",
+                "Robert C. Martin");
+
+        Usuario usuario = new Usuario(
+                ManipuladorArquivos.proximoId("Usuario.csv"),
+                "Gabriel",
+                "gabriel@email.com");
 
         System.out.println("=== CADASTROS (duas bibliotecárias, um único acervo) ===");
         maria.cadastrarLivro(biblioteca, livro);
