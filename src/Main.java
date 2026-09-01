@@ -1,5 +1,5 @@
 import java.util.Date;
-import modelo.*; // Importante para reconhecer Livro, Usuario, Biblioteca, etc.
+import modelo.*;
 import util.ManipuladorArquivos;
 
 public class Main {
