@@ -1,4 +1,7 @@
+package util;
+
 import java.io.*;
+import modelo.*;
 
 public class ManipuladorArquivos {
 

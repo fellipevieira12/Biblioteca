@@ -1,3 +1,5 @@
+package modelo;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
