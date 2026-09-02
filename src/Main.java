@@ -7,11 +7,9 @@ public class Main {
 
         public static void main(String[] args) {
 
-                Biblioteca biblioteca = new Biblioteca();
                 Bibliotecaria maria = new Bibliotecaria(1, "Maria");
                 Bibliotecaria joao = new Bibliotecaria(2, "João");
 
-                // --- CADASTRANDO OBJETOS 1 ---
                 Livro livro1 = new Livro(
                                 ManipuladorArquivos.proximoId("Livro.csv"),
                                 "Clean Code",
@@ -24,7 +22,6 @@ public class Main {
                                 "gabriel@email.com");
                 ManipuladorArquivos.salvarUsuario(usuario1);
 
-                // --- CADASTRANDO OBJETOS 2 ---
                 Livro livro2 = new Livro(
                                 ManipuladorArquivos.proximoId("Livro.csv"),
                                 "Crime e Castigo",
@@ -37,13 +34,12 @@ public class Main {
                                 "fellipe@email.com");
                 ManipuladorArquivos.salvarUsuario(usuario2);
 
-                System.out.println("=== CADASTROS (duas bibliotecárias, um único acervo) ===");
-                maria.cadastrarLivro(biblioteca, livro1);
-                joao.cadastrarLivro(biblioteca, livro2);
-                maria.cadastrarUsuario(biblioteca, usuario1);
-                joao.cadastrarUsuario(biblioteca, usuario2);
+                System.out.println("=== CADASTROS ===");
+                maria.cadastrarLivro(livro1);
+                joao.cadastrarLivro(livro2);
+                maria.cadastrarUsuario(usuario1);
+                joao.cadastrarUsuario(usuario2);
 
-                // --- EMPRÉSTIMOS ---
                 Emprestimo emprestimo1 = new Emprestimo(
                                 ManipuladorArquivos.proximoId("Emprestimo.csv"),
                                 livro1,
@@ -51,16 +47,8 @@ public class Main {
                                 new Date());
                 ManipuladorArquivos.salvarEmprestimo(emprestimo1);
 
-                Emprestimo emprestimo2 = new Emprestimo(
-                                ManipuladorArquivos.proximoId("Emprestimo.csv"),
-                                livro2,
-                                usuario2,
-                                new Date());
-                ManipuladorArquivos.salvarEmprestimo(emprestimo2);
-
                 System.out.println("\n=== REGISTRANDO EMPRÉSTIMOS ===");
-                maria.registrarEmprestimo(biblioteca, emprestimo1);
-                joao.registrarEmprestimo(biblioteca, emprestimo2);
+                maria.registrarEmprestimo(emprestimo1);
 
                 System.out.println("\n=== REGISTRANDO DEVOLUÇÃO ===");
                 maria.registrarDevolucao(emprestimo1);
@@ -73,20 +61,7 @@ public class Main {
                                 usuario2,
                                 new Date());
                 ManipuladorArquivos.salvarReserva(reserva1);
-                joao.registrarReserva(biblioteca, reserva1);
-
-                Reserva reserva2 = new Reserva(
-                                ManipuladorArquivos.proximoId("Reserva.csv"),
-                                livro2,
-                                usuario1,
-                                new Date());
-                ManipuladorArquivos.salvarReserva(reserva2);
-                maria.registrarReserva(biblioteca, reserva2);
-
-                reserva1.cancelarReserva();
-
-                System.out.println("\n=== ESTADO FINAL DA BIBLIOTECA ===");
-                System.out.println(biblioteca);
+                joao.registrarReserva(reserva1);
 
                 System.out.println("\n=== LENDO ARQUIVO DE LIVROS ===");
                 List<Livro> livrosLidos = ManipuladorArquivos.lerLivros();
