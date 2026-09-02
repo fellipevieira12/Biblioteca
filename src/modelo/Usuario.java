@@ -6,8 +6,6 @@ public class Usuario {
     private String nome;
     private String email;
 
-    private Emprestimo[] emprestimos = new Emprestimo[0];
-
     public Usuario(int idUsuario, String nome, String email) {
         this.idUsuario = idUsuario;
         this.nome = nome;
@@ -38,22 +36,8 @@ public class Usuario {
         this.email = email;
     }
 
-    public void solicitarEmprestimo(Emprestimo emprestimo) {
-        Emprestimo[] novoArray = new Emprestimo[emprestimos.length + 1];
-        for (int i = 0; i < emprestimos.length; i++) {
-            novoArray[i] = emprestimos[i];
-        }
-        novoArray[emprestimos.length] = emprestimo;
-        emprestimos = novoArray;
-
+    public void solicitarEmprestimo() {
         System.out.println("Empréstimo solicitado por " + nome);
-    }
-
-    public void consultarEmprestimos() {
-        System.out.println("Empréstimos de " + nome + ":");
-        for (Emprestimo emprestimo : emprestimos) {
-            System.out.println(emprestimo);
-        }
     }
 
     public void atualizarContato(String email) {
@@ -67,7 +51,6 @@ public class Usuario {
                 "idUsuario=" + idUsuario +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
-                ", totalEmprestimos=" + emprestimos.length +
                 '}';
     }
 
