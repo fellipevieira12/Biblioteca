@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.List;
 import modelo.*;
 import util.ManipuladorArquivos;
 
@@ -10,64 +11,93 @@ public class Main {
                 Bibliotecaria maria = new Bibliotecaria(1, "Maria");
                 Bibliotecaria joao = new Bibliotecaria(2, "João");
 
-                Livro livro = new Livro(
+                // --- CADASTRANDO OBJETOS 1 ---
+                Livro livro1 = new Livro(
                                 ManipuladorArquivos.proximoId("Livro.csv"),
                                 "Clean Code",
                                 "Robert C. Martin");
-                ManipuladorArquivos.salvarLivro(livro);
+                ManipuladorArquivos.salvarLivro(livro1);
 
-                Usuario usuario = new Usuario(
+                Usuario usuario1 = new Usuario(
                                 ManipuladorArquivos.proximoId("Usuario.csv"),
                                 "Gabriel",
                                 "gabriel@email.com");
-                ManipuladorArquivos.salvarUsuario(usuario);
+                ManipuladorArquivos.salvarUsuario(usuario1);
+
+                // --- CADASTRANDO OBJETOS 2 ---
+                Livro livro2 = new Livro(
+                                ManipuladorArquivos.proximoId("Livro.csv"),
+                                "Crime e Castigo",
+                                "Fiódor Dostoiévski");
+                ManipuladorArquivos.salvarLivro(livro2);
+
+                Usuario usuario2 = new Usuario(
+                                ManipuladorArquivos.proximoId("Usuario.csv"),
+                                "Fellipe",
+                                "fellipe@email.com");
+                ManipuladorArquivos.salvarUsuario(usuario2);
 
                 System.out.println("=== CADASTROS (duas bibliotecárias, um único acervo) ===");
-                maria.cadastrarLivro(biblioteca, livro);
-                joao.cadastrarUsuario(biblioteca, usuario);
+                maria.cadastrarLivro(biblioteca, livro1);
+                joao.cadastrarLivro(biblioteca, livro2);
+                maria.cadastrarUsuario(biblioteca, usuario1);
+                joao.cadastrarUsuario(biblioteca, usuario2);
 
-                Emprestimo emprestimo = new Emprestimo(
+                // --- EMPRÉSTIMOS ---
+                Emprestimo emprestimo1 = new Emprestimo(
                                 ManipuladorArquivos.proximoId("Emprestimo.csv"),
-                                livro,
-                                usuario,
+                                livro1,
+                                usuario1,
                                 new Date());
-                ManipuladorArquivos.salvarEmprestimo(emprestimo);
+                ManipuladorArquivos.salvarEmprestimo(emprestimo1);
 
-                System.out.println("\n=== REGISTRANDO EMPRÉSTIMO ===");
-                maria.registrarEmprestimo(biblioteca, emprestimo);
+                Emprestimo emprestimo2 = new Emprestimo(
+                                ManipuladorArquivos.proximoId("Emprestimo.csv"),
+                                livro2,
+                                usuario2,
+                                new Date());
+                ManipuladorArquivos.salvarEmprestimo(emprestimo2);
 
-                System.out.println("\n=== IMPRIMINDO OBJETOS (toString) ===");
-                System.out.println(livro);
-                System.out.println(usuario);
-                System.out.println(emprestimo);
-                System.out.println(maria);
-                System.out.println(joao);
-                System.out.println(biblioteca);
+                System.out.println("\n=== REGISTRANDO EMPRÉSTIMOS ===");
+                maria.registrarEmprestimo(biblioteca, emprestimo1);
+                joao.registrarEmprestimo(biblioteca, emprestimo2);
 
                 System.out.println("\n=== REGISTRANDO DEVOLUÇÃO ===");
-                maria.registrarDevolucao(emprestimo);
+                maria.registrarDevolucao(emprestimo1);
 
-                System.out.println("\n=== ESTADO APÓS DEVOLUÇÃO ===");
-                System.out.println(livro);
-                System.out.println(emprestimo);
-
-                System.out.println("\n=== DEMONSTRANDO RESERVA ===");
-
-                Reserva reserva = new Reserva(
+                // --- RESERVAS ---
+                System.out.println("\n=== DEMONSTRANDO RESERVAS ===");
+                Reserva reserva1 = new Reserva(
                                 ManipuladorArquivos.proximoId("Reserva.csv"),
-                                livro,
-                                usuario,
+                                livro1,
+                                usuario2,
                                 new Date());
-                ManipuladorArquivos.salvarReserva(reserva);
+                ManipuladorArquivos.salvarReserva(reserva1);
+                joao.registrarReserva(biblioteca, reserva1);
 
-                joao.registrarReserva(biblioteca, reserva);
-                System.out.println(reserva);
-                System.out.println(livro);
+                Reserva reserva2 = new Reserva(
+                                ManipuladorArquivos.proximoId("Reserva.csv"),
+                                livro2,
+                                usuario1,
+                                new Date());
+                ManipuladorArquivos.salvarReserva(reserva2);
+                maria.registrarReserva(biblioteca, reserva2);
 
-                reserva.cancelarReserva();
-                System.out.println(reserva);
+                reserva1.cancelarReserva();
 
                 System.out.println("\n=== ESTADO FINAL DA BIBLIOTECA ===");
                 System.out.println(biblioteca);
+
+                System.out.println("\n=== LENDO ARQUIVO DE LIVROS ===");
+                List<Livro> livrosLidos = ManipuladorArquivos.lerLivros();
+                for (Livro l : livrosLidos) {
+                        System.out.println(l.toString());
+                }
+
+                System.out.println("\n=== LENDO ARQUIVO DE USUÁRIOS ===");
+                List<Usuario> usuariosLidos = ManipuladorArquivos.lerUsuarios();
+                for (Usuario u : usuariosLidos) {
+                        System.out.println(u.toString());
+                }
         }
 }
