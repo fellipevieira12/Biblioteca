@@ -32,6 +32,35 @@ public class ManipuladorArquivos {
         salvarLinha("Reserva.csv", reserva.toCSV());
     }
 
+    public static void salvarBibliotecaria(Bibliotecaria bibliotecaria) {
+        salvarLinha("Bibliotecaria.csv", bibliotecaria.toCSV());
+    }
+
+    public static List<Bibliotecaria> lerBibliotecarias() {
+        List<Bibliotecaria> bibliotecarias = new ArrayList<>();
+        try {
+            File arq = new File(DIRETORIO, "Bibliotecaria.csv");
+            if (!arq.exists())
+                return bibliotecarias;
+
+            BufferedReader br = new BufferedReader(new FileReader(arq));
+            String linha;
+
+            while ((linha = br.readLine()) != null) {
+                String[] campos = linha.split(";");
+
+                int id = Integer.parseInt(campos[0]);
+                String nome = campos[1];
+
+                bibliotecarias.add(new Bibliotecaria(id, nome));
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao ler bibliotecárias: " + e.getMessage());
+        }
+        return bibliotecarias;
+    }
+
     private static void salvarLinha(String arquivo, String linha) {
         try {
             FileWriter fw = new FileWriter(

@@ -1,5 +1,7 @@
 package modelo;
 
+import util.ManipuladorArquivos;
+
 public class Bibliotecaria {
 
     private int idBibliotecaria;
@@ -10,11 +12,21 @@ public class Bibliotecaria {
         this.nome = nome;
     }
 
+    public int getIdBibliotecaria() {
+        return idBibliotecaria;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
     public void cadastrarLivro(Livro livro) {
+        ManipuladorArquivos.salvarLivro(livro);
         System.out.println("Livro '" + livro.getTitulo() + "' cadastrado por " + this.nome);
     }
 
     public void cadastrarUsuario(Usuario usuario) {
+        ManipuladorArquivos.salvarUsuario(usuario);
         System.out.println("Usuário '" + usuario.getNome() + "' cadastrado por " + this.nome);
     }
 

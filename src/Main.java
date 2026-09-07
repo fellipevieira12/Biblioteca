@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.List;
 import modelo.*;
 import util.ManipuladorArquivos;
+import visao.menus.MenuInicial;
 
 public class Main {
 
@@ -15,6 +16,8 @@ public class Main {
 
                 Bibliotecaria maria = new Bibliotecaria(1, "Maria");
                 Bibliotecaria joao = new Bibliotecaria(2, "João");
+                ManipuladorArquivos.salvarBibliotecaria(maria);
+                ManipuladorArquivos.salvarBibliotecaria(joao);
 
                 Livro livro1 = new Livro(ManipuladorArquivos.proximoId("Livro.csv"), "Clean Code", "Robert C. Martin");
                 Livro livro2 = new Livro(ManipuladorArquivos.proximoId("Livro.csv") + 1, "Padrões de Projetos", "GoF");
@@ -69,5 +72,7 @@ public class Main {
                 for (Usuario u : usuariosLidos) {
                         System.out.println(u.toString());
                 }
+
+                new MenuInicial();
         }
 }
