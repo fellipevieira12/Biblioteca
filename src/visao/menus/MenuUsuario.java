@@ -3,6 +3,9 @@ package visao.menus;
 import javax.swing.*;
 import java.awt.*;
 
+import visao.telas.TelaMinhasReservas;
+import visao.telas.TelaSolicitarEmprestimo;
+
 public class MenuUsuario extends JFrame {
     private int idUsuario;
 
@@ -18,8 +21,16 @@ public class MenuUsuario extends JFrame {
         painel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton btnSolicitarEmprestimo = new JButton("Solicitar Empréstimo");
+        btnSolicitarEmprestimo.addActionListener(e -> {
+            dispose();
+            new TelaSolicitarEmprestimo(idUsuario);
+        });
 
         JButton btnMinhasReservas = new JButton("Minhas Reservas");
+        btnMinhasReservas.addActionListener(e -> {
+            dispose();
+            new TelaMinhasReservas(idUsuario);
+        });
 
         JButton btnSair = new JButton("Sair");
         btnSair.addActionListener(e -> {

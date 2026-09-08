@@ -5,6 +5,8 @@ import java.awt.*;
 
 import visao.telas.TelaCadastroLivro;
 import visao.telas.TelaCadastroUsuario;
+import visao.telas.TelaRegistrarDevolucao;
+import visao.telas.TelaRegistrarEmprestimo;
 
 public class MenuBibliotecaria extends JFrame {
     private int idBibliotecaria;
@@ -33,8 +35,16 @@ public class MenuBibliotecaria extends JFrame {
         });
 
         JButton btnRegistrarEmprestimo = new JButton("Registrar Empréstimo");
+        btnRegistrarEmprestimo.addActionListener(e -> {
+            dispose();
+            new TelaRegistrarEmprestimo(idBibliotecaria);
+        });
 
         JButton btnRegistrarDevolucao = new JButton("Registrar Devolução");
+        btnRegistrarDevolucao.addActionListener(e -> {
+            dispose();
+            new TelaRegistrarDevolucao(idBibliotecaria);
+        });
 
         JButton btnSair = new JButton("Sair");
         btnSair.addActionListener(e -> {
