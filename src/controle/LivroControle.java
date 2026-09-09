@@ -30,4 +30,25 @@ public class LivroControle {
                 .findFirst()
                 .orElse(null);
     }
+
+    public static void excluirLivro(Integer idLivro, JFrame tela, int idBibliotecaria) {
+        if (idLivro == null) {
+            JOptionPane.showMessageDialog(tela, "Selecione um livro.");
+            return;
+        }
+
+        boolean emprestado = EmprestimoControle.listarEmprestimosAtivos().stream()
+                .anyMatch(e -> e.getLivro() != null && e.getLivro().getIdLivro() == idLivro);
+
+        if (emprestado) {
+            JOptionPane.showMessageDialog(tela, "Não é possível excluir: livro está emprestado.");
+            return;
+        }
+
+        ManipuladorArquivos.removerLivro(idLivro);
+
+        JOptionPane.showMessageDialog(tela, "Livro excluído com sucesso!");
+        tela.dispose();
+        new visao.menus.MenuBibliotecaria(idBibliotecaria);
+    }
 }

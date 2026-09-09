@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import visao.telas.TelaMinhasReservas;
+import visao.telas.TelaReservarLivro;
 import visao.telas.TelaSolicitarEmprestimo;
 
 public class MenuUsuario extends JFrame {
@@ -17,13 +18,19 @@ public class MenuUsuario extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel painel = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel painel = new JPanel(new GridLayout(4, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton btnSolicitarEmprestimo = new JButton("Solicitar Empréstimo");
         btnSolicitarEmprestimo.addActionListener(e -> {
             dispose();
             new TelaSolicitarEmprestimo(idUsuario);
+        });
+
+        JButton btnReservarLivro = new JButton("Reservar Livro");
+        btnReservarLivro.addActionListener(e -> {
+            dispose();
+            new TelaReservarLivro(idUsuario);
         });
 
         JButton btnMinhasReservas = new JButton("Minhas Reservas");
@@ -39,6 +46,7 @@ public class MenuUsuario extends JFrame {
         });
 
         painel.add(btnSolicitarEmprestimo);
+        painel.add(btnReservarLivro);
         painel.add(btnMinhasReservas);
         painel.add(btnSair);
 

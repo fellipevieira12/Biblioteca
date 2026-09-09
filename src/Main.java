@@ -10,7 +10,6 @@ public class Main {
                         Bibliotecaria admin = new Bibliotecaria(1, "admin");
                         ManipuladorArquivos.salvarBibliotecaria(admin);
                 }
-
                 new MenuInicial();
         }
 }

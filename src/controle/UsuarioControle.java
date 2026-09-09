@@ -35,4 +35,25 @@ public class UsuarioControle {
                 .findFirst()
                 .orElse(null);
     }
+
+    public static void excluirUsuario(Integer idUsuario, JFrame tela, int idBibliotecaria) {
+        if (idUsuario == null) {
+            JOptionPane.showMessageDialog(tela, "Selecione um usuário.");
+            return;
+        }
+
+        boolean possuiEmprestimoAtivo = EmprestimoControle.listarEmprestimosAtivos().stream()
+                .anyMatch(e -> e.getUsuario() != null && e.getUsuario().getIdUsuario() == idUsuario);
+
+        if (possuiEmprestimoAtivo) {
+            JOptionPane.showMessageDialog(tela, "Não é possível excluir: usuário possui empréstimo ativo.");
+            return;
+        }
+
+        ManipuladorArquivos.removerUsuario(idUsuario);
+
+        JOptionPane.showMessageDialog(tela, "Usuário excluído com sucesso!");
+        tela.dispose();
+        new visao.menus.MenuBibliotecaria(idBibliotecaria);
+    }
 }

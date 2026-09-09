@@ -40,6 +40,10 @@ public class Usuario {
         System.out.println("Empréstimo solicitado por " + nome);
     }
 
+    public void solicitarReserva() {
+        System.out.println("Reserva solicitada por " + nome);
+    }
+
     public void atualizarContato(String email) {
         this.email = email;
         System.out.println("E-mail atualizado para: " + email);

@@ -5,6 +5,8 @@ import java.awt.*;
 
 import visao.telas.TelaCadastroLivro;
 import visao.telas.TelaCadastroUsuario;
+import visao.telas.TelaExcluirLivro;
+import visao.telas.TelaExcluirUsuario;
 import visao.telas.TelaRegistrarDevolucao;
 import visao.telas.TelaRegistrarEmprestimo;
 
@@ -15,11 +17,11 @@ public class MenuBibliotecaria extends JFrame {
         this.idBibliotecaria = idBibliotecaria;
 
         setTitle("Menu Bibliotecária - " + this.idBibliotecaria);
-        setSize(400, 350);
+        setSize(400, 420);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel painel = new JPanel(new GridLayout(5, 1, 10, 10));
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JButton btnCadastrarLivro = new JButton("Cadastrar Livro");
@@ -32,6 +34,18 @@ public class MenuBibliotecaria extends JFrame {
         btnCadastrarUsuario.addActionListener(e -> {
             dispose();
             new TelaCadastroUsuario(idBibliotecaria);
+        });
+
+        JButton btnExcluirLivro = new JButton("Excluir Livro");
+        btnExcluirLivro.addActionListener(e -> {
+            dispose();
+            new TelaExcluirLivro(idBibliotecaria);
+        });
+
+        JButton btnExcluirUsuario = new JButton("Excluir Usuário");
+        btnExcluirUsuario.addActionListener(e -> {
+            dispose();
+            new TelaExcluirUsuario(idBibliotecaria);
         });
 
         JButton btnRegistrarEmprestimo = new JButton("Registrar Empréstimo");
@@ -54,6 +68,8 @@ public class MenuBibliotecaria extends JFrame {
 
         painel.add(btnCadastrarLivro);
         painel.add(btnCadastrarUsuario);
+        painel.add(btnExcluirLivro);
+        painel.add(btnExcluirUsuario);
         painel.add(btnRegistrarEmprestimo);
         painel.add(btnRegistrarDevolucao);
         painel.add(btnSair);

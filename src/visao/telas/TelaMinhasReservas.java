@@ -1,13 +1,12 @@
 package visao.telas;
 
-import controle.EmprestimoControle;
-import modelo.Emprestimo;
+import controle.ReservaControle;
+import modelo.Reserva;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TelaMinhasReservas extends JFrame {
 
@@ -17,18 +16,17 @@ public class TelaMinhasReservas extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        List<Emprestimo> emprestimos = EmprestimoControle.listarEmprestimosAtivos().stream()
-                .filter(e -> e.getUsuario() != null && e.getUsuario().getIdUsuario() == idUsuario)
-                .collect(Collectors.toList());
+        List<Reserva> reservas = ReservaControle.listarReservasPorUsuario(idUsuario);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         DefaultListModel<String> modeloLista = new DefaultListModel<>();
-        if (emprestimos.isEmpty()) {
-            modeloLista.addElement("Nenhum empréstimo encontrado.");
+        if (reservas.isEmpty()) {
+            modeloLista.addElement("Nenhuma reserva encontrada.");
         } else {
-            for (Emprestimo e : emprestimos) {
-                modeloLista.addElement(e.getLivro().getTitulo() + " - Emprestado em " + sdf.format(e.getDataEmprestimo()));
+            for (Reserva r : reservas) {
+                modeloLista.addElement(r.getLivro().getTitulo() + " - Reservado em "
+                        + sdf.format(r.getDataReserva()) + " (" + r.getStatusReserva() + ")");
             }
         }
 

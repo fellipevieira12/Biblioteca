@@ -38,6 +38,40 @@ public class ManipuladorArquivos {
         salvarLinha("Bibliotecaria.csv", bibliotecaria.toCSV());
     }
 
+    public static void removerLivro(int idLivro) {
+        List<Livro> livros = lerLivros();
+        livros.removeIf(l -> l.getIdLivro() == idLivro);
+
+        List<String> linhas = new ArrayList<>();
+        for (Livro l : livros) {
+            linhas.add(l.toCSV());
+        }
+        reescreverArquivo("Livro.csv", linhas);
+    }
+
+    public static void removerUsuario(int idUsuario) {
+        List<Usuario> usuarios = lerUsuarios();
+        usuarios.removeIf(u -> u.getIdUsuario() == idUsuario);
+
+        List<String> linhas = new ArrayList<>();
+        for (Usuario u : usuarios) {
+            linhas.add(u.toCSV());
+        }
+        reescreverArquivo("Usuario.csv", linhas);
+    }
+
+    private static void reescreverArquivo(String arquivo, List<String> linhas) {
+        try {
+            FileWriter fw = new FileWriter(new File(DIRETORIO, arquivo), false);
+            for (String linha : linhas) {
+                fw.write(linha + "\n");
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Erro ao remover: " + e.getMessage());
+        }
+    }
+
     public static List<Bibliotecaria> lerBibliotecarias() {
         List<Bibliotecaria> bibliotecarias = new ArrayList<>();
         try {
