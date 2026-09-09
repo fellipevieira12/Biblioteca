@@ -2,7 +2,9 @@ package controle;
 
 import modelo.Emprestimo;
 import modelo.Livro;
+import modelo.Reserva;
 import modelo.StatusLivro;
+import modelo.StatusReserva;
 import modelo.Usuario;
 import util.ManipuladorArquivos;
 
@@ -11,13 +13,11 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class EmprestimoControle {
 
-    // Como salvar um empréstimo sempre gera uma linha nova no CSV (nunca
-    // sobrescreve), pegamos aqui apenas o registro mais recente de cada
-    // idEmprestimo para saber o estado atual (ativo ou devolvido).
     public static List<Emprestimo> listarEmprestimosAtivos() {
         Map<Integer, Emprestimo> ultimoRegistroPorId = new LinkedHashMap<>();
 
@@ -56,7 +56,7 @@ public class EmprestimoControle {
         BibliotecariaControle.obterBibliotecaria(idBibliotecaria).registrarEmprestimo(emprestimo);
         ManipuladorArquivos.salvarEmprestimo(emprestimo);
 
-        JOptionPane.showMessageDialog(tela, "Empréstimo registrado com sucesso!");
+        JOptionPane.showMessageDialog(tela, "Empréstimo registrado com sucesso!\nPrazo de devolução: 7 dias.");
         tela.dispose();
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
     }
@@ -77,10 +77,51 @@ public class EmprestimoControle {
             return;
         }
 
+        Date dataAtual = new Date();
+        long diferencaMilissegundos = dataAtual.getTime() - emprestimo.getDataEmprestimo().getTime();
+        long diasEmprestado = TimeUnit.DAYS.convert(diferencaMilissegundos, TimeUnit.MILLISECONDS);
+
+        int diasPermitidos = 7;
+        String avisoMulta = "";
+
+        if (diasEmprestado > diasPermitidos) {
+            long diasAtraso = diasEmprestado - diasPermitidos;
+            double valorMulta = diasAtraso * 2.0;
+            avisoMulta = String.format("\n\n⚠️ ATRASO DETECTADO: %d dias.\nMulta a ser cobrada: R$ %.2f", diasAtraso,
+                    valorMulta);
+        }
+
         BibliotecariaControle.obterBibliotecaria(idBibliotecaria).registrarDevolucao(emprestimo);
         ManipuladorArquivos.salvarEmprestimo(emprestimo);
 
-        JOptionPane.showMessageDialog(tela, "Devolução registrada com sucesso!");
+        Livro livroDevolvido = emprestimo.getLivro();
+        List<Reserva> reservas = ManipuladorArquivos.lerReservas();
+
+        boolean temReserva = reservas.stream()
+                .anyMatch(r -> r.getLivro().getIdLivro() == livroDevolvido.getIdLivro()
+                        && r.getStatusReserva() == StatusReserva.ATIVA);
+
+        List<Livro> todosLivros = ManipuladorArquivos.lerLivros();
+        for (Livro l : todosLivros) {
+            if (l.getIdLivro() == livroDevolvido.getIdLivro()) {
+                if (temReserva) {
+                    l.setStatus(StatusLivro.RESERVADO);
+                } else {
+                    l.setStatus(StatusLivro.DISPONIVEL);
+                }
+                break;
+            }
+        }
+        ManipuladorArquivos.reescreverArquivoLivros(todosLivros);
+
+        if (temReserva) {
+            JOptionPane.showMessageDialog(tela,
+                    "Devolução registrada!" + avisoMulta
+                            + "\n\nATENÇÃO: Este livro possui reserva na fila de espera.\nStatus alterado para RESERVADO.");
+        } else {
+            JOptionPane.showMessageDialog(tela, "Devolução registrada com sucesso! Livro DISPONÍVEL." + avisoMulta);
+        }
+
         tela.dispose();
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
     }
@@ -101,7 +142,7 @@ public class EmprestimoControle {
         livro.alterarStatus(StatusLivro.EMPRESTADO);
         ManipuladorArquivos.salvarEmprestimo(emprestimo);
 
-        JOptionPane.showMessageDialog(tela, "Empréstimo solicitado com sucesso!");
+        JOptionPane.showMessageDialog(tela, "Empréstimo solicitado com sucesso!\nPrazo padrão: 7 dias.");
         tela.dispose();
         new visao.menus.MenuUsuario(idUsuario);
     }
