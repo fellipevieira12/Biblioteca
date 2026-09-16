@@ -1,10 +1,12 @@
 package controle;
 
+import modelo.Emprestimo;
 import modelo.Usuario;
 import util.ManipuladorArquivos;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UsuarioControle {
 
@@ -55,5 +57,14 @@ public class UsuarioControle {
         JOptionPane.showMessageDialog(tela, "Usuário excluído com sucesso!");
         tela.dispose();
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
+    }
+
+    public static List<Emprestimo> obterHistoricoLeitura(int idUsuario) {
+        List<Emprestimo> todosEmprestimos = ManipuladorArquivos.lerEmprestimos();
+
+        return todosEmprestimos.stream()
+                .filter(e -> e.getUsuario() != null && e.getUsuario().getIdUsuario() == idUsuario)
+                .filter(e -> !e.getAtivo())
+                .collect(Collectors.toList());
     }
 }

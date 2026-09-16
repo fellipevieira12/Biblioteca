@@ -72,6 +72,22 @@ public class ManipuladorArquivos {
         }
     }
 
+    public static void reescreverArquivoLivros(List<Livro> livros) {
+        List<String> linhas = new ArrayList<>();
+        for (Livro l : livros) {
+            linhas.add(l.toCSV());
+        }
+        reescreverArquivo("Livro.csv", linhas);
+    }
+
+    public static void reescreverArquivoUsuarios(List<Usuario> usuarios) {
+        List<String> linhas = new ArrayList<>();
+        for (Usuario u : usuarios) {
+            linhas.add(u.toCSV());
+        }
+        reescreverArquivo("Usuario.csv", linhas);
+    }
+
     public static List<Bibliotecaria> lerBibliotecarias() {
         List<Bibliotecaria> bibliotecarias = new ArrayList<>();
         try {
