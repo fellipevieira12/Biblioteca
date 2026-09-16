@@ -42,10 +42,6 @@ public class EmprestimoControle {
                 .collect(Collectors.toList());
     }
 
-    // Cria o Emprestimo e já marca o Livro como EMPRESTADO — lugar único usado
-    // tanto pelo fluxo da bibliotecária (registrarEmprestimo) quanto pelo
-    // autoatendimento do usuário (solicitarEmprestimo), evitando duplicar essa
-    // regra nos dois métodos.
     private static Emprestimo criarEmprestimo(Livro livro, Usuario usuario) {
         int id = ManipuladorArquivos.proximoId("Emprestimo.csv");
         Emprestimo emprestimo = new Emprestimo(id, livro, usuario, new Date());
@@ -54,9 +50,6 @@ public class EmprestimoControle {
         return emprestimo;
     }
 
-    // Regrava o Livro.csv com o novo status do livro informado. Usado tanto na
-    // criação do empréstimo (status EMPRESTADO) quanto na devolução (status
-    // DISPONIVEL/RESERVADO), evitando repetir a busca+regravação nos dois lugares.
     private static void persistirStatusLivro(Livro livroAtualizado) {
         List<Livro> todosLivros = ManipuladorArquivos.lerLivros();
         for (Livro l : todosLivros) {
