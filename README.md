@@ -44,6 +44,17 @@ src/
    **Usuário** e navegar pelas telas de cadastro, empréstimo, devolução e
    reserva.
 
+## Regras de empréstimo, devolução e reserva
+
+- Prazo padrão de empréstimo: **7 dias**. Na devolução, se o prazo foi
+  ultrapassado, o sistema calcula automaticamente a **multa por atraso**
+  (R$ 2,00/dia) e exibe o valor para a bibliotecária.
+- Se o livro devolvido tiver uma **reserva ativa** na fila, seu status muda
+  para `RESERVADO` em vez de `DISPONIVEL` — e ele continua aparecendo nas
+  telas de empréstimo, podendo ser emprestado normalmente a partir daí.
+- O usuário pode consultar seu **Histórico de Leitura** (empréstimos já
+  devolvidos) pelo próprio `MenuUsuario`.
+
 ## Persistência
 
 Todos os dados (livros, usuários, bibliotecárias, empréstimos e reservas)

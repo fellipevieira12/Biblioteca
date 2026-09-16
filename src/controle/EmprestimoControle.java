@@ -37,8 +37,35 @@ public class EmprestimoControle {
                 .collect(Collectors.toList());
 
         return ManipuladorArquivos.lerLivros().stream()
-                .filter(l -> l.getStatus() == StatusLivro.DISPONIVEL && !idsEmprestados.contains(l.getIdLivro()))
+                .filter(l -> (l.getStatus() == StatusLivro.DISPONIVEL || l.getStatus() == StatusLivro.RESERVADO)
+                        && !idsEmprestados.contains(l.getIdLivro()))
                 .collect(Collectors.toList());
+    }
+
+    // Cria o Emprestimo e já marca o Livro como EMPRESTADO — lugar único usado
+    // tanto pelo fluxo da bibliotecária (registrarEmprestimo) quanto pelo
+    // autoatendimento do usuário (solicitarEmprestimo), evitando duplicar essa
+    // regra nos dois métodos.
+    private static Emprestimo criarEmprestimo(Livro livro, Usuario usuario) {
+        int id = ManipuladorArquivos.proximoId("Emprestimo.csv");
+        Emprestimo emprestimo = new Emprestimo(id, livro, usuario, new Date());
+        livro.alterarStatus(StatusLivro.EMPRESTADO);
+        persistirStatusLivro(livro);
+        return emprestimo;
+    }
+
+    // Regrava o Livro.csv com o novo status do livro informado. Usado tanto na
+    // criação do empréstimo (status EMPRESTADO) quanto na devolução (status
+    // DISPONIVEL/RESERVADO), evitando repetir a busca+regravação nos dois lugares.
+    private static void persistirStatusLivro(Livro livroAtualizado) {
+        List<Livro> todosLivros = ManipuladorArquivos.lerLivros();
+        for (Livro l : todosLivros) {
+            if (l.getIdLivro() == livroAtualizado.getIdLivro()) {
+                l.setStatus(livroAtualizado.getStatus());
+                break;
+            }
+        }
+        ManipuladorArquivos.reescreverArquivoLivros(todosLivros);
     }
 
     public static void registrarEmprestimo(Integer idLivro, Integer idUsuario, JFrame tela, int idBibliotecaria) {
@@ -50,8 +77,7 @@ public class EmprestimoControle {
         Livro livro = LivroControle.obterLivro(idLivro);
         Usuario usuario = UsuarioControle.obterUsuario(idUsuario);
 
-        int id = ManipuladorArquivos.proximoId("Emprestimo.csv");
-        Emprestimo emprestimo = new Emprestimo(id, livro, usuario, new Date());
+        Emprestimo emprestimo = criarEmprestimo(livro, usuario);
 
         BibliotecariaControle.obterBibliotecaria(idBibliotecaria).registrarEmprestimo(emprestimo);
         ManipuladorArquivos.salvarEmprestimo(emprestimo);
@@ -101,18 +127,8 @@ public class EmprestimoControle {
                 .anyMatch(r -> r.getLivro().getIdLivro() == livroDevolvido.getIdLivro()
                         && r.getStatusReserva() == StatusReserva.ATIVA);
 
-        List<Livro> todosLivros = ManipuladorArquivos.lerLivros();
-        for (Livro l : todosLivros) {
-            if (l.getIdLivro() == livroDevolvido.getIdLivro()) {
-                if (temReserva) {
-                    l.setStatus(StatusLivro.RESERVADO);
-                } else {
-                    l.setStatus(StatusLivro.DISPONIVEL);
-                }
-                break;
-            }
-        }
-        ManipuladorArquivos.reescreverArquivoLivros(todosLivros);
+        livroDevolvido.setStatus(temReserva ? StatusLivro.RESERVADO : StatusLivro.DISPONIVEL);
+        persistirStatusLivro(livroDevolvido);
 
         if (temReserva) {
             JOptionPane.showMessageDialog(tela,
@@ -135,11 +151,8 @@ public class EmprestimoControle {
         Livro livro = LivroControle.obterLivro(idLivro);
         Usuario usuario = UsuarioControle.obterUsuario(idUsuario);
 
-        int id = ManipuladorArquivos.proximoId("Emprestimo.csv");
-        Emprestimo emprestimo = new Emprestimo(id, livro, usuario, new Date());
-
+        Emprestimo emprestimo = criarEmprestimo(livro, usuario);
         usuario.solicitarEmprestimo();
-        livro.alterarStatus(StatusLivro.EMPRESTADO);
         ManipuladorArquivos.salvarEmprestimo(emprestimo);
 
         JOptionPane.showMessageDialog(tela, "Empréstimo solicitado com sucesso!\nPrazo padrão: 7 dias.");
