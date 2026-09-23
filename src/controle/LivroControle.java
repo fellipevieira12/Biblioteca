@@ -51,4 +51,10 @@ public class LivroControle {
         tela.dispose();
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
     }
+
+    public static List<Livro> listarTodosLivros() {
+        List<Livro> livros = ManipuladorArquivos.lerLivros();
+        livros.sort((l1, l2) -> l1.getTitulo().compareToIgnoreCase(l2.getTitulo()));
+        return livros;
+    }
 }

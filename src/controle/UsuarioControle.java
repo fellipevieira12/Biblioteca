@@ -30,6 +30,10 @@ public class UsuarioControle {
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
     }
 
+    public static List<Usuario> listarTodosUsuarios() {
+        return ManipuladorArquivos.lerUsuarios();
+    }
+
     public static Usuario obterUsuario(int idUsuario) {
         List<Usuario> usuarios = ManipuladorArquivos.lerUsuarios();
         return usuarios.stream()
