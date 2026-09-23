@@ -11,27 +11,54 @@ persistência simples em arquivos `.csv` e relacionamento entre classes por
 ## Estrutura
 
 ```
-src/
-├── Main.java
-├── modelo/
-│   ├── Livro.java
-│   ├── Usuario.java
-│   ├── Bibliotecaria.java
-│   ├── Emprestimo.java          // tem-um Livro, tem-um Usuario
-│   ├── Reserva.java             // tem-um Livro, tem-um Usuario
-│   ├── StatusLivro.java
-│   └── StatusReserva.java
-├── controle/
-│   ├── LivroControle.java
-│   ├── UsuarioControle.java
-│   ├── BibliotecariaControle.java
-│   ├── EmprestimoControle.java
-│   └── ReservaControle.java
-├── visao/
-│   ├── menus/                   // MenuInicial, MenuBibliotecaria, MenuUsuario
-│   └── telas/                   // cadastro, exclusão, empréstimo, devolução, reserva
-└── util/
-    └── ManipuladorArquivos.java // leitura/escrita dos .csv em dados/
+Biblioteca/
+├── UML/
+│   └── UML biblioteca.jpg       // diagrama de classes do professor
+├── dados/                        // persistência em .csv
+│   ├── Bibliotecaria.csv
+│   ├── Emprestimo.csv
+│   ├── Livro.csv
+│   ├── Reserva.csv
+│   └── Usuario.csv
+└── src/
+    ├── Main.java
+    ├── modelo/
+    │   ├── Livro.java
+    │   ├── Usuario.java
+    │   ├── Bibliotecaria.java
+    │   ├── Emprestimo.java          // tem-um Livro, tem-um Usuario
+    │   ├── Reserva.java             // tem-um Livro, tem-um Usuario
+    │   ├── StatusLivro.java
+    │   └── StatusReserva.java
+    ├── controle/
+    │   ├── LivroControle.java
+    │   ├── UsuarioControle.java
+    │   ├── BibliotecariaControle.java
+    │   ├── EmprestimoControle.java
+    │   └── ReservaControle.java
+    ├── visao/
+    │   ├── menus/
+    │   │   ├── MenuInicial.java
+    │   │   ├── MenuBibliotecaria.java
+    │   │   └── MenuUsuario.java
+    │   └── telas/
+    │       ├── TelaCadastroLivro.java
+    │       ├── TelaCadastroUsuario.java
+    │       ├── TelaExcluirLivro.java
+    │       ├── TelaExcluirUsuario.java
+    │       ├── TelaListarLivros.java
+    │       ├── TelaListarUsuarios.java
+    │       ├── TelaRegistrarEmprestimo.java
+    │       ├── TelaRegistrarDevolucao.java
+    │       ├── TelaReservarLivro.java
+    │       ├── TelaSolicitarEmprestimo.java
+    │       ├── TelaMinhasReservas.java
+    │       ├── TelaEditarLivro.java          // criada, ainda vazia
+    │       ├── TelaEditarUsuario.java        // criada, ainda vazia
+    │       ├── TelaListarEmprestimos.java    // criada, ainda vazia
+    │       └── TelaListarReservas.java       // criada, ainda vazia
+    └── util/
+        └── ManipuladorArquivos.java // leitura/escrita dos .csv em dados/
 ```
 
 ## Como executar
@@ -41,8 +68,24 @@ src/
 3. Na primeira execução, `Main` cria automaticamente uma bibliotecária
    padrão (`admin`) caso `dados/Bibliotecaria.csv` esteja vazio.
 4. A tela inicial (`MenuInicial`) permite entrar como **Bibliotecária** ou
-   **Usuário** e navegar pelas telas de cadastro, empréstimo, devolução e
-   reserva.
+   **Usuário** e navegar pelas telas de cadastro, exclusão, listagem,
+   empréstimo, devolução e reserva.
+
+## Funcionalidades por perfil
+
+**Bibliotecária** (`MenuBibliotecaria`): cadastrar/excluir livro,
+cadastrar/excluir usuário, registrar empréstimo, registrar devolução,
+listar livros e listar usuários (tabelas com `JTable`, cada uma com botão
+"Voltar" para o menu).
+
+**Usuário** (`MenuUsuario`): solicitar empréstimo, reservar livro, consultar
+"Minhas Reservas" e consultar o **Histórico de Leitura** (empréstimos já
+devolvidos).
+
+> Edição de livro/usuário e listagem de empréstimos/reservas já têm telas
+> (`TelaEditarLivro`, `TelaEditarUsuario`, `TelaListarEmprestimos`,
+> `TelaListarReservas`) criadas na estrutura do projeto, mas ainda não
+> implementadas nem ligadas aos menus.
 
 ## Regras de empréstimo, devolução e reserva
 
