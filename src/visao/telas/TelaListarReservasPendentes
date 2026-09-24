@@ -8,30 +8,36 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class TelaListarReservas extends JFrame {
+public class TelaListarReservasPendentes extends JFrame {
 
-    public TelaListarReservas(int idBibliotecaria) {
-        setTitle("Listar Reservas");
+    public TelaListarReservasPendentes(int idBibliotecaria) {
+        setTitle("Reservas Pendentes de Efetivação");
         setSize(600, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        String[] colunas = {"ID", "Livro", "Usuário", "Data Reserva", "Status"};
-        List<Reserva> reservas = ReservaControle.listarTodasReservas();
+        String[] colunas = {"ID", "Livro", "Usuário", "Data Reserva"};
+        List<Reserva> reservasPendentes = ReservaControle.listarReservasPendentes();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        Object[][] dados = new Object[reservas.size()][5];
-        for (int i = 0; i < reservas.size(); i++) {
-            Reserva r = reservas.get(i);
+        Object[][] dados = new Object[reservasPendentes.size()][4];
+        for (int i = 0; i < reservasPendentes.size(); i++) {
+            Reserva r = reservasPendentes.get(i);
             dados[i][0] = r.getIdReserva();
             dados[i][1] = r.getLivro() != null ? r.getLivro().getTitulo() : "-";
             dados[i][2] = r.getUsuario() != null ? r.getUsuario().getNome() : "-";
             dados[i][3] = r.getDataReserva() != null ? sdf.format(r.getDataReserva()) : "-";
-            dados[i][4] = r.getStatusReserva();
         }
 
         JTable tabela = new JTable(dados, colunas);
         JScrollPane scroll = new JScrollPane(tabela);
+
+        JLabel lblAviso = new JLabel(
+                reservasPendentes.isEmpty()
+                        ? "Nenhuma reserva pendente no momento."
+                        : reservasPendentes.size() + " reserva(s) pendente(s) de efetivação.",
+                SwingConstants.CENTER
+        );
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(e -> {
@@ -43,6 +49,7 @@ public class TelaListarReservas extends JFrame {
         painelBotao.add(btnVoltar);
 
         setLayout(new BorderLayout());
+        add(lblAviso, BorderLayout.NORTH);
         add(scroll, BorderLayout.CENTER);
         add(painelBotao, BorderLayout.SOUTH);
 

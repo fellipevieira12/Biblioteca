@@ -34,6 +34,46 @@ public class UsuarioControle {
         return ManipuladorArquivos.lerUsuarios();
     }
 
+    public static void editarUsuario(Integer idUsuario, String novoNome, String novoEmail, JFrame tela, int idBibliotecaria) {
+        if (idUsuario == null) {
+            JOptionPane.showMessageDialog(tela, "Selecione um usuário.");
+            return;
+        }
+
+        if (novoNome.isEmpty() || novoEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(tela, "Preencha todos os campos.");
+            return;
+        }
+
+        if (!novoEmail.contains("@")) {
+            JOptionPane.showMessageDialog(tela, "Email inválido.");
+            return;
+        }
+
+        List<Usuario> usuarios = ManipuladorArquivos.lerUsuarios();
+        Usuario encontrado = null;
+
+        for (Usuario u : usuarios) {
+            if (u.getIdUsuario() == idUsuario) {
+                u.setNome(novoNome);
+                u.setEmail(novoEmail);
+                encontrado = u;
+                break;
+            }
+        }
+
+        if (encontrado == null) {
+            JOptionPane.showMessageDialog(tela, "Usuário não encontrado.");
+            return;
+        }
+
+        ManipuladorArquivos.reescreverArquivoUsuarios(usuarios);
+
+        JOptionPane.showMessageDialog(tela, "Usuário atualizado com sucesso!");
+        tela.dispose();
+        new visao.menus.MenuBibliotecaria(idBibliotecaria);
+    }
+
     public static Usuario obterUsuario(int idUsuario) {
         List<Usuario> usuarios = ManipuladorArquivos.lerUsuarios();
         return usuarios.stream()

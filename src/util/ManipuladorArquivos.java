@@ -88,6 +88,25 @@ public class ManipuladorArquivos {
         reescreverArquivo("Usuario.csv", linhas);
     }
 
+    public static void removerBibliotecaria(int idBibliotecaria) {
+        List<Bibliotecaria> bibliotecarias = lerBibliotecarias();
+        bibliotecarias.removeIf(b -> b.getIdBibliotecaria() == idBibliotecaria);
+
+        List<String> linhas = new ArrayList<>();
+        for (Bibliotecaria b : bibliotecarias) {
+            linhas.add(b.toCSV());
+        }
+        reescreverArquivo("Bibliotecaria.csv", linhas);
+    }
+
+    public static void reescreverArquivoBibliotecarias(List<Bibliotecaria> bibliotecarias) {
+        List<String> linhas = new ArrayList<>();
+        for (Bibliotecaria b : bibliotecarias) {
+            linhas.add(b.toCSV());
+        }
+        reescreverArquivo("Bibliotecaria.csv", linhas);
+    } 
+
     public static List<Bibliotecaria> lerBibliotecarias() {
         List<Bibliotecaria> bibliotecarias = new ArrayList<>();
         try {
@@ -337,4 +356,43 @@ public class ManipuladorArquivos {
 
         return maiorId + 1;
     }
+
+    public static void removerReserva(int idReserva) {
+        List<Reserva> reservas = lerReservas();
+            reservas.removeIf(r -> r.getIdReserva() == idReserva);
+
+        List<String> linhas = new ArrayList<>();
+        for (Reserva r : reservas) {
+            linhas.add(r.toCSV());
+        }
+    reescreverArquivo("Reserva.csv", linhas);
+    }
+
+    public static void reescreverArquivoReservas(List<Reserva> reservas) {
+        List<String> linhas = new ArrayList<>();
+        for (Reserva r : reservas) {
+            linhas.add(r.toCSV());
+        }
+        reescreverArquivo("Reserva.csv", linhas);
+    }
+
+    public static void removerEmprestimo(int idEmprestimo) {
+        List<Emprestimo> emprestimos = lerEmprestimos();
+        emprestimos.removeIf(e -> e.getIdEmprestimo() == idEmprestimo);
+
+        List<String> linhas = new ArrayList<>();
+        for (Emprestimo e : emprestimos) {
+            linhas.add(e.toCSV());
+        }
+        reescreverArquivo("Emprestimo.csv", linhas);
+    }
+
+    public static void reescreverArquivoEmprestimos(List<Emprestimo> emprestimos) {
+        List<String> linhas = new ArrayList<>();
+        for (Emprestimo e : emprestimos) {
+            linhas.add(e.toCSV());
+        }
+        reescreverArquivo("Emprestimo.csv", linhas);
+}
+
 }

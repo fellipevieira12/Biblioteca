@@ -23,6 +23,45 @@ public class LivroControle {
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
     }
 
+    public static List<Livro> listarTodosLivros() {
+        return ManipuladorArquivos.lerLivros();
+    }
+
+    public static void editarLivro(Integer idLivro, String novoTitulo, String novoAutor, JFrame tela, int idBibliotecaria) {
+        if (idLivro == null) {
+            JOptionPane.showMessageDialog(tela, "Selecione um livro.");
+            return;
+        }
+
+        if (novoTitulo.isEmpty() || novoAutor.isEmpty()) {
+            JOptionPane.showMessageDialog(tela, "Preencha todos os campos.");
+            return;
+        }
+
+        List<Livro> livros = ManipuladorArquivos.lerLivros();
+        Livro encontrado = null;
+
+        for (Livro l : livros) {
+            if (l.getIdLivro() == idLivro) {
+                l.setTitulo(novoTitulo);
+                l.setAutor(novoAutor);
+                encontrado = l;
+                break;
+            }
+        }
+
+        if (encontrado == null) {
+            JOptionPane.showMessageDialog(tela, "Livro não encontrado.");
+            return;
+        }
+
+        ManipuladorArquivos.reescreverArquivoLivros(livros);
+
+        JOptionPane.showMessageDialog(tela, "Livro atualizado com sucesso!");
+        tela.dispose();
+        new visao.menus.MenuBibliotecaria(idBibliotecaria);
+    }
+
     public static Livro obterLivro(int idLivro) {
         List<Livro> livros = ManipuladorArquivos.lerLivros();
         return livros.stream()
@@ -50,11 +89,5 @@ public class LivroControle {
         JOptionPane.showMessageDialog(tela, "Livro excluído com sucesso!");
         tela.dispose();
         new visao.menus.MenuBibliotecaria(idBibliotecaria);
-    }
-
-    public static List<Livro> listarTodosLivros() {
-        List<Livro> livros = ManipuladorArquivos.lerLivros();
-        livros.sort((l1, l2) -> l1.getTitulo().compareToIgnoreCase(l2.getTitulo()));
-        return livros;
     }
 }
