@@ -16,7 +16,7 @@ public class TelaListarReservasPendentes extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        String[] colunas = {"ID", "Livro", "Usuário", "Data Reserva"};
+        String[] colunas = { "ID", "Livro", "Usuário", "Data Reserva" };
         List<Reserva> reservasPendentes = ReservaControle.listarReservasPendentes();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -36,8 +36,7 @@ public class TelaListarReservasPendentes extends JFrame {
                 reservasPendentes.isEmpty()
                         ? "Nenhuma reserva pendente no momento."
                         : reservasPendentes.size() + " reserva(s) pendente(s) de efetivação.",
-                SwingConstants.CENTER
-        );
+                SwingConstants.CENTER);
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(e -> {
